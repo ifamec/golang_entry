@@ -289,6 +289,7 @@ naming rules:
 
 ### Predefined Identifier
 basic data type & system nested function
+
 |           |            |        |       |         |         | 
 |-----------|------------|--------|-------|---------|---------| 
 | append    | bool       | byte   | cap   | close   | complex | 
