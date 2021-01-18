@@ -6,11 +6,11 @@ import (
 )
 
 func main() {
-	// declare in if statement
+	// declare in if condition
 	if n := 1; n > 0 {
-		fmt.Printf("n declared in if statement: %v\n", n)
+		fmt.Printf("n declared in if condition: %v\n", n)
 	}
-	// if statement is a assignment
+	// if condition is a assignment
 	//var x bool = true // COMPILE ERROR
 	//if x = false {
 	//	fmt.Println('ERROR')
