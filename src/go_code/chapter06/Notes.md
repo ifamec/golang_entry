@@ -68,3 +68,114 @@ a function call itself in its function body
 13. go support multiple params
     - `args` is slice use args[index] to visit each val
     - `args...` should be the last param
+    
+## init
+
+each source file could have one `init()`, which will execute before `main()`
+
+### Details
+1. order: global variable definition -> init() -> main()
+2. imported package will execute first
+
+## anonymous 
+
+could be single use, or multiple use
+
+- call anonymous function when declare
+- assign to variable
+- global anonymous function
+
+## closure 
+
+function + it's related env
+
+```go
+func accumulator() func(int) int {
+	var n int = 10
+	return func(x int) int {
+		n += x
+		return n
+	}
+}
+func main()  {
+
+f := accumulator()
+fmt.Println(f(1)) // 11
+fmt.Println(f(2)) // 13
+fmt.Println(f(3)) // 16
+}
+```
+
+1. accumulator() will return a func(int) int
+2. the anonymous function and `n` became an entity -> closure
+3. closure refers as a class, the function is the action, `n` is a field
+4. when call `f` function, `n` will init only once, and the `n` is accumulated
+5. to scope the closure, need to clarify the variable that the function used
+
+```go
+func makeSuffix(suffix string) func(string) string {
+	return func(s string) string {
+		if ! strings.HasSuffix(s, suffix) {
+			return s + suffix
+		}
+		return s
+	}
+}
+```
+the closure contains thr `return functon` and `suffix string`
+
+```go
+closure := makeSuffix(".jpg")
+fmt.Println(closure("aaa"))
+fmt.Println(closure("aaa.jpg"))
+```
+the second time using the closure, we don't need to pass ".jpg" again, since the closure have the suffix value as ".jpg" already
+
+## defer
+when creating source, add defer, the source will be released timely
+
+push `defer` statement to a stack, when function finish, pop and execute
+
+when push `defer` statement into the stack, KEEP THE CURRENT VALUE
+
+e.g.:
+```psudocode
+file = openfile
+defer file.close
+// --
+
+connect = opendb
+defer connect.close
+```
+the source will be closed before exiting the fn
+
+## Review Params
+
+- pass by value - a copy of the value (basic type, array, struct)
+- pass by reference - a copy of the reference (pointer, slice, chan, map, interface)
+    - more efficiency copy size smaller
+    
+pass reference in function to change the value out side the scope
+
+## Scope
+
+- local variable - declare a variable inside a function - scope to current function
+- global variable - declare a variable outside a function - scope to current package
+    - if a global variable start with uppercase, scope to the whole project
+- declare in for/if code block - scope to current code block
+
+assignment cannot execute outside a function
+
+## string
+1. `len(str)` - get length [builtin]
+2. `[]rune(str)` - iteration string with unicode
+3. `n, err := strconv.Atoi("str")` - string to int
+4. `n, err := strconv.Itoa("str")` - int to string
+5. `[]byte("str")` - string to byte
+6. `string([]byte{97,98,99})` - byte to string
+7. `strconv.FormatInt(123,2)` - 10 to b2 b8 b16
+8. `strings.Contains("string", "str)` - contains substring
+9. `strings.Count("cheese","e")//4` - count substring
+10. `strings.EqualFold("abc","ABC")` - case insensitive string compare
+11. `strings.Index("string", "tri")` - return substring first shows up position
+12.
