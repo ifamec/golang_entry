@@ -209,3 +209,18 @@ assignment cannot execute outside a function
     - Hour
 - `time.Sleep()` - sleep
 - get Unix (nanosecond) timestamp: `time.Unix() time.Unixnano()`
+
+
+## Builtin
+
+`len()` get string length
+
+`new(Type)` return a address that pointing RAM that stores the value
+- used for distribute RAM for value type
+  - `num2 := new(int)`
+  - `fmt.Printf("%T, %v, %v, %v\n", num2, num2, &num2, *num2)`
+  - `// *int, the address of *num2 (system), address of num2, value of num2 pointing`
+
+`make` used for distribute RAM for reference type [channel map slice]
+
+
