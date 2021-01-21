@@ -38,4 +38,27 @@ func main() {
 	fmt.Println(strings.EqualFold("abc", "ABC"), "abc" == "ABC")
 
 	fmt.Println(strings.Index(str, "州"), strings.Index(str, "Hello"))
+	fmt.Println(strings.Index("stringstring", "tri"))
+
+	fmt.Println(strings.LastIndex("stringstring", "tri"))
+
+	fmt.Println(strings.Replace("go go golang","go", "GO", -1))
+
+	fmt.Println(strings.Split("Hello,World,OK", ","))
+
+	fmt.Println(strings.ToLower("AAAA"), strings.ToUpper("aaaa"))
+
+	fmt.Println(strings.TrimSpace("   Hello, World      "))
+
+	fmt.Println(strings.Trim("!!!   Hello! World!! !", " !"))
+
+	fmt.Println(strings.TrimLeft("!!!   Hello, World!! !", " !"))
+
+	fmt.Println(strings.TrimRight("!!!   Hello, World!! !", " !"))
+
+	fmt.Println(strings.HasPrefix("Hello, World", "Hello"))
+
+	fmt.Println(strings.HasSuffix("Hello, World", "World!"))
+
+
 }

@@ -178,4 +178,13 @@ assignment cannot execute outside a function
 9. `strings.Count("cheese","e")//4` - count substring
 10. `strings.EqualFold("abc","ABC")` - case insensitive string compare
 11. `strings.Index("string", "tri")` - return substring first shows up position
-12.
+12. `strings.LastIndex("stringstring", "tri")` - return substring last shows up position
+13. `strings.Replace("go golang","go", "GO", n)` - replace "oriString" "substring to raplace" "expected value", "how much to replace" **-1, replace all**
+14. `strings.Split("Hello,World", ",")` - split string, return an array
+15. `strings.ToLower("AAAA") strings.ToUpper("aaaa")` - toLowerCase, toUpperCase
+16. `strings.TrimSpace("   Hello, World      ")` - trim spaces
+17. `strings.Trim("!!!   Hello, World!! !", " !")` - trim certain charters
+18. `strings.TrimLeft("!!!   Hello, World!! !", " !")` - trim certain charters on the left
+19. `strings.TrimRight("!!!   Hello, World!! !", " !")` - trim certain charters on the right
+20. `strings.HasPrefix("Hello, World", "Hello")` - has prefix
+21. `strings.HasSuffix("Hello, World", "World!")` - has suffix
