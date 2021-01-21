@@ -223,4 +223,17 @@ assignment cannot execute outside a function
 
 `make` used for distribute RAM for reference type [channel map slice]
 
+## Error Handling
 
+- when panic occurs, program exits.
+- to capture panic and handle that, to make sure the program continue executing, and throw an message
+
+
+1. does not support `try catch finally`
+2. use `defer, panic, recover`
+3. when error happens, throw `panic`, use `recover` in `defer` to handle error
+
+create a custom Error
+
+1. `error.New("Err Msg")` - return an error value
+2. builtin `panic` function will receive an empty interface() type value as param. Could get error value and print error msg then exit the program
