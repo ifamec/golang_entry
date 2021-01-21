@@ -4,9 +4,9 @@ import (
 	"fmt"
 )
 
-func main()  {
-	var arr [3] string = [3] string {"AAA", "BBB", "CCC"}
-	for index, value := range arr{
+func main() {
+	var arr [3]string = [3]string{"AAA", "BBB", "CCC"}
+	for index, value := range arr {
 		fmt.Println(index, value, arr[index])
 	}
 
