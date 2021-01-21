@@ -188,3 +188,24 @@ assignment cannot execute outside a function
 19. `strings.TrimRight("!!!   Hello, World!! !", " !")` - trim certain charters on the right
 20. `strings.HasPrefix("Hello, World", "Hello")` - has prefix
 21. `strings.HasSuffix("Hello, World", "World!")` - has suffix
+
+
+## Time & Date
+
+- use package `time`
+- time.Time data type to represent time
+- get current time `time.Now()`
+- get date info `now.Year(), int(now.Month()), now.Day(), now.Hour(), now.Minute(), now.Second()`
+- format datetime
+    - use `Printf` or `Sprintf`
+    - use `now.Format("2006-01-02 15:04:05")` could take part of the datetime
+        - must use `2006-01-02 15:04:05`
+- time const `10*time.Second() // 10s`: // get certain time ***DO NOT USE DIVIDE*
+    - Nanosecond
+    - Microsecond
+    - Millisecond
+    - Second
+    - Minute
+    - Hour
+- `time.Sleep()` - sleep
+- get Unix (nanosecond) timestamp: `time.Unix() time.Unixnano()`
