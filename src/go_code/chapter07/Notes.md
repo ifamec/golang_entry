@@ -138,4 +138,14 @@ diff between 1, 2
     - copy a slice to another slice !! both need to be slice
     - two slice is space independent
     - if the `destination` slice has less length than the `original` one, only copy len(destination) elements
-- 
+- slice is pass by reference
+
+### string slice
+
+- string is a byte array, could be sliced
+- string is slice like 😆😆😆
+- string is unmodifiable ~~string[0] = 'a'~~
+- to modify a string:
+    - string -> byte array
+    - modify
+    - array -> string
