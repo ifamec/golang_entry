@@ -62,3 +62,25 @@ arrInit5 := [...]string{1: "MY", 0: "OH", 2: "GOD"}
 9. pass by reference to change the array value outside the function
    ![array_pass_by_ref](img/array_pass_by_ref.png)
 10. length of the array is part of the data type, when passing params, we need to consider array length
+
+
+## Slice
+
+~ dynamic length array
+
+- slice is a reference of array / reference type / follow pass by reference
+- array like
+- length is dynamic
+- declaration: `var slice []int` // no length required
+  
+![slice_ram](img/slice_ram.png)
+- slice is reference type
+- slide: struct
+  ```go
+   type slice struct {
+       ptr *[2]int
+       len int
+       cap int
+   }
+   ```
+
