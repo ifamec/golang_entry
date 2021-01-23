@@ -71,12 +71,12 @@ for (loop variable init); (loop condition); (loop variable iterate) {
 }
 ```
 1. loop condition is a bool
-2. `for condition { body }`, move init and iteration to somewhere else
+2. `for condition { body }`, move init and traverse to somewhere else
 3. `for {body}`, use with `break` and `continue`
-4. for-range: string / array iteration
+4. for-range: string / array traverse
 
 #### Details
-- legacy iteration of string - use byte to iterate 0-255
+- legacy traverse of string - use byte to iterate 0-255
   - to solve this, use slice
 - for-range using character to iterate
 

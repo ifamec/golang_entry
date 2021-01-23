@@ -168,7 +168,7 @@ assignment cannot execute outside a function
 
 ## string
 1. `len(str)` - get length [builtin]
-2. `[]rune(str)` - iteration string with unicode
+2. `[]rune(str)` - traverse string with unicode
 3. `n, err := strconv.Atoi("str")` - string to int
 4. `n, err := strconv.Itoa("str")` - int to string
 5. `[]byte("str")` - string to byte

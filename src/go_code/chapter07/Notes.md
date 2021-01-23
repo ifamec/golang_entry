@@ -33,7 +33,7 @@ var arrInit4 = [...]int{1: 800, 0: 700, 2: 1000, 4: 1200}
 arrInit5 := [...]string{1: "MY", 0: "OH", 2: "GOD"}
 ```
 
-### Iteration
+### Traverse
 
 1. use `for`
 2. use for-range
@@ -106,7 +106,7 @@ diff between 1, 2
 1. reference existing array, could access from outside
 2. make will create an array for the slice, the array is invisible to devs
 
-### Iteration
+### Traverse
 
 - for
 - for-range
