@@ -241,7 +241,7 @@ Value types
 - array
 - struct
 
-variable save value directly and ram usually get distributed in the stack
+variable save value directly and ram usually get allocated in the stack
   
 Reference Types
 - pointer
@@ -250,7 +250,7 @@ Reference Types
 - channel
 - interface
 
-the variable saves an address and ram usually get distributed in the queue.
+the variable saves an address and ram usually get allocated in the queue.
 If no variable reference this address, then the data space will be GCed
 
 
