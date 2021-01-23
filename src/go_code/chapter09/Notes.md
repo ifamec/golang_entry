@@ -47,8 +47,28 @@ Declare will not allocate RAM, need use `make`, then can assign value and use
     - make a new map
 
 `val, find := m[3]`
+
 - find is a bool
 - if find is true, val could be the value of the key
 - if find is false, val could be the default value of the dataType
 
+## traverse
 
+use `for range` only
+
+get length `len(map)`
+
+## slice
+
+if the datatype of the slice is map, then its called "slice of map". in this case, the amount of map is dynamic
+
+## sort
+
+- no builtin method to sort the map by key
+- map is unordered by default
+- sort by key
+    - key to slice
+    - sort slice
+    - traverse slice and print value
+
+## Details
