@@ -163,3 +163,6 @@ Step:
 [CHECK CODE](oop_exercise/main.go)
 
 ## Factory Mode
+
+`struct` in golang does not have constructor, use factory mode to realise that
+
