@@ -72,3 +72,7 @@ if the datatype of the slice is map, then its called "slice of map". in this cas
     - traverse slice and print value
 
 ## Details
+
+1. map is reference type
+2. map could increase k-v pair automatically
+3. value will use struct more often, more suitable for complex data structure 
