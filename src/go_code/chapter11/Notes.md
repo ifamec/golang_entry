@@ -133,8 +133,19 @@ Interface inherit - if inherit two same name method // Error [Duplicate Define D
 **?? Might be an update in later version, No error in 1.15.6**
 
 
+### Interface vs Inheritance
+[Interface vs Inheritance Example](interface_vs_inheritance/main.go)
+- When struct B inherit A, B inherit all fields and methods, could use directly
+- B want to have new methods but don't want to break the inheritance, use interface
+- Interface is a supplement of inheritance
 
+- Interface and Inheritance solving different issues
+    - inheritance: code re-usability and maintainability
+    - interface: design, design rules, have custom type to realise methods
+- Interface is more flexible than Inheritance
+- Interface could realise low coupling in some aspect
 
+### polymorphism
 
 
 
