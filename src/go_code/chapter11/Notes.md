@@ -147,8 +147,50 @@ Interface inherit - if inherit two same name method // Error [Duplicate Define D
 
 ### polymorphism
 
+using interface to realise polymorphism in golang
 
 
+- polymorphism params
+    - [polymorphism example](interface01/main.go)
+- polymorphism array
+    - [polymorphism example](polymorphism01/main.go)
+
+### type assertion
+
+```go
+type Point struct {
+    x int
+    y int
+}
+
+func main()  {
+    var a interface{}
+    var point Point = Point{1, 2}
+    a = point // √
+    var b Point
+    // b = a // Error a is not a Point need type assertion
+    b = a.(Point)
+    fmt.Println(b)
+}
+```
+To convert empty interface to other type, use type assertion 
+
+```go
+var x interface{}
+var b2 float64 = 1.1
+x = b2
+var c float64 = x.(float64)
+fmt.Printf("%T, %v\n", c, c) // float64 1.1
+```
+When using type assertion,if the type does not match -> Panic. Make sure the empty interface is pointing to the type need assertion
+
+
+#### type assertion with check
+
+if not success, return something instead of panic  
+[type assertion](typeassertion01/main.go)  
+[type assertion eg](typeassertion02/main.go)  
+[type assertion eg](typeassertion03/main.go)
 
 
 
