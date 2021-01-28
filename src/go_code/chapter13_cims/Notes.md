@@ -50,9 +50,13 @@ C
 2. Add method
     - append new customer to customers slice 
     - id will use the add order
+3. Delete(id int) method
+    - FindById(id int) index of the object in slice
 
 V
 1. show Lists
     - call customerService.List, show data
 2. add method
     - call customerService.Add
+3. delete method
+    - call customerService.Delete

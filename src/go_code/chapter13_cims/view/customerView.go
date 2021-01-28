@@ -11,6 +11,7 @@ type customerView struct {
 	exit bool
 	customerService *service.CustomerService
 }
+
 func (c *customerView) mainMenu() {
 	for {
 		fmt.Println()
@@ -26,7 +27,7 @@ func (c *customerView) mainMenu() {
 		switch (*c).selection {
 		case "1": (*c).addCustomer()
 		case "2": fmt.Println("Modify")
-		case "3": fmt.Println("Delete")
+		case "3": (*c).deleteCustomer()
 		case "4": (*c).showList()
 		case "5": (*c).exit = true
 		default: fmt.Println("Error, Retry")
@@ -68,6 +69,36 @@ func (c *customerView) addCustomer() {
 		fmt.Println("----------------------- Add Customer Success -----------------------")
 	}
 }
+func (c *customerView) deleteCustomer() {
+	var confirm string
+	var isSuccess bool
+	var id int = -1
+	fmt.Println("-------------------------- Delete Customer -------------------------")
+	fmt.Printf("Please Provide Id: ")
+	fmt.Scanln(&id)
+	if id == -1 {
+		fmt.Println("Cancel Delete")
+		return
+	}
+	fmt.Printf("Are You Sure To Delete? (Y/N): ")
+	for {
+		fmt.Scanln(&confirm)
+		if confirm == "y" || confirm == "Y" {
+			isSuccess = (*c).customerService.Delete(id)
+			if isSuccess {
+				fmt.Println("--------------------- Delete Customer Success ----------------------")
+			} else {
+				fmt.Println("ID Not Exist")
+				fmt.Println("---------------------- Delete Customer Error -----------------------")
+			}
+			break
+		} else if confirm == "n" || confirm == "N" {
+			fmt.Println("Cancel Delete")
+			break
+		}
+		fmt.Printf("Input Error, Are You Sure To Delete (Y/N): ")
+	}
+}
 
 func main() {
 	var ui = customerView{
@@ -78,8 +109,3 @@ func main() {
 
 	ui.mainMenu()
 }
-
-
-
-
-

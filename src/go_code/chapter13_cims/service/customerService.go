@@ -31,3 +31,23 @@ func (cs *CustomerService) Add(customer model.Customer) bool {
 	(*cs).customers = append((*cs).customers, customer)
 	return true
 }
+func (cs *CustomerService) Delete(id int) bool {
+	var index int = (*cs).FindById(id)
+	if index == -1 {
+		return false
+	} else {
+		// delete element in slice
+		(*cs).customers = append((*cs).customers[:index], (*cs).customers[index+1:]...)
+		return true
+	}
+}
+func (cs *CustomerService) FindById(id int) (index int) {
+	index = -1
+	for i, v := range (*cs).customers {
+		if id == v.Id {
+			index = i
+			return
+		}
+	}
+	return
+}
