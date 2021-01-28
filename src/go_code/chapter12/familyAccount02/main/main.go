@@ -7,5 +7,5 @@ import (
 
 func main()  {
 	fmt.Println("OOP")
-	utils.NewFamilyAccount().ShowMainMenu()
+	utils.NewFamilyAccount().Auth()
 }
