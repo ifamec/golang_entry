@@ -39,13 +39,15 @@ type Customer struct {
     Phone string
 }
 ```
+0. add GetInfo method
+
 
 C
-- NewCustomerService, return customerService variable
-- List method
+0. NewCustomerService, return customerService variable
+1. List method
     - customer list slice
 
 
 V
-- show Lists
+1. show Lists
     - call customerService.list, show data
