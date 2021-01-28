@@ -51,3 +51,13 @@ func (cs *CustomerService) FindById(id int) (index int) {
 	}
 	return
 }
+func (cs *CustomerService) Modify(customer model.Customer) bool {
+	var index int = (*cs).FindById(customer.Id)
+	if index == -1 {
+		return false
+	} else {
+		// modify element in slice
+		(*cs).customers[index] = customer
+		return true
+	}
+}

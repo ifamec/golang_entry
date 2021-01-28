@@ -53,6 +53,8 @@ C
 3. Delete(id int) method
     - FindById(id int) index of the object in slice
 4. Exit
+5. Modify(id) method
+   - FindById check if the user is exist or not
 
 V
 1. show Lists
@@ -62,3 +64,5 @@ V
 3. delete method
     - call customerService.Delete
 4. X
+5. modify method
+    - call customerService.Modify

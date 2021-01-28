@@ -26,7 +26,7 @@ func (c *customerView) mainMenu() {
 
 		switch (*c).selection {
 		case "1": (*c).addCustomer()
-		case "2": fmt.Println("Modify")
+		case "2": (*c).modifyCustomer()
 		case "3": (*c).deleteCustomer()
 		case "4": (*c).showList()
 		case "5": (*c).exitApp()
@@ -73,10 +73,14 @@ func (c *customerView) deleteCustomer() {
 	var isSuccess bool
 	var id int = -1
 	fmt.Println("-------------------------- Delete Customer -------------------------")
-	fmt.Printf("Please Provide Id: ")
+	fmt.Printf("Please Provide Id (-1 to exit): ")
 	fmt.Scanln(&id)
 	if id == -1 {
 		fmt.Println("Cancel Delete")
+		return
+	}
+	if (*c).customerService.FindById(id) == -1 {
+		fmt.Println("ID Not Exist")
 		return
 	}
 	fmt.Printf("Are You Sure To Delete? (Y/N): ")
@@ -94,6 +98,57 @@ func (c *customerView) deleteCustomer() {
 			break
 		} else if confirm == "n" || confirm == "N" {
 			fmt.Println("Cancel Delete")
+			break
+		}
+		fmt.Printf("Input Error, Are You Sure To Delete (Y/N): ")
+	}
+}
+func (c *customerView) modifyCustomer() {
+	var isSuccess bool
+	var id, age int = -1, 0
+	var name, gender, phone, email string
+	var existingCustomer model.Customer
+	fmt.Println("-------------------------- Modify Customer -------------------------")
+	fmt.Printf("Please Provide Id (-1 to exit): ")
+	fmt.Scanln(&id)
+	if id == -1 {
+		fmt.Println("Cancel Modify")
+		return
+	}
+	if (*c).customerService.FindById(id) == -1 {
+		fmt.Println("ID Not Exist")
+		return
+	}
+	existingCustomer = (*c).customerService.List()[(*c).customerService.FindById(id)]
+	name, gender, age, phone, email = existingCustomer.Name, existingCustomer.Gender, existingCustomer.Age, existingCustomer.Phone, existingCustomer.Email
+	fmt.Println("Hit Enter To Preserve Current Value")
+	fmt.Printf("Id: (%v)\n", id)
+	fmt.Printf("Name(%v): ", name)
+	fmt.Scanln(&name)
+	fmt.Printf("Gender(%v): ", gender)
+	fmt.Scanln(&gender)
+	fmt.Printf("Age(%v): ", age)
+	fmt.Scanln(&age)
+	fmt.Printf("Phone(%v): ", phone)
+	fmt.Scanln(&phone)
+	fmt.Printf("Email(%v): ", email)
+	fmt.Scanln(&email)
+	fmt.Println("--------------------- Modified Data Collected ----------------------")
+	var modifiedCustomer = model.NewCustomer(id, name, gender, age, phone, email)
+	fmt.Printf("Are You Sure To Modify (Y/N): ")
+	for {
+		var confirm string = ""
+		fmt.Scanln(&confirm)
+		if confirm == "y" || confirm == "Y" {
+			isSuccess = (*c).customerService.Modify(modifiedCustomer)
+			if isSuccess {
+				fmt.Println("--------------------- Modify Customer Success ----------------------")
+			} else {
+				fmt.Println("---------------------- Modify Customer Error -----------------------")
+			}
+			break
+		} else if confirm == "n" || confirm == "N" {
+			fmt.Println("Cancel Modify")
 			break
 		}
 		fmt.Printf("Input Error, Are You Sure To Delete (Y/N): ")
