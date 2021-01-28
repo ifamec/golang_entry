@@ -39,3 +39,13 @@ type Customer struct {
     Phone string
 }
 ```
+
+C
+- NewCustomerService, return customerService variable
+- List method
+    - customer list slice
+
+
+V
+- show Lists
+    - call customerService.list, show data

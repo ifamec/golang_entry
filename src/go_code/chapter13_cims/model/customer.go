@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 // declare a customer struct to represent a customer
 
 type Customer struct {
@@ -21,4 +23,8 @@ func NewCustomer(id int, name string, gender string,
 		Phone: phone,
 		Email: email,
 	}
+}
+
+func (c *Customer) GetInfo() string {
+	return fmt.Sprintf("%v\t%v\t%v\t%v\t%v\t%v", (*c).Id, (*c).Name, (*c).Gender, (*c).Age, (*c).Phone, (*c).Email)
 }
