@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go_code/chapter13_cims/model"
 	"go_code/chapter13_cims/service"
 )
 
@@ -23,7 +24,7 @@ func (c *customerView) mainMenu() {
 		fmt.Scanln(&(*c).selection)
 
 		switch (*c).selection {
-		case "1": fmt.Println("ADD")
+		case "1": (*c).addCustomer()
 		case "2": fmt.Println("Modify")
 		case "3": fmt.Println("Delete")
 		case "4": (*c).showList()
@@ -45,6 +46,27 @@ func (c *customerView) showList() {
 		fmt.Println(v.GetInfo())
 	}
 	fmt.Println("------------------------ Customers List End ------------------------")
+}
+func (c *customerView) addCustomer() {
+	var isSuccess bool
+	var name, gender, phone, email string
+	var age int
+	fmt.Println("--------------------------- Add Customer ---------------------------")
+	fmt.Printf("Name: ")
+	fmt.Scanln(&name)
+	fmt.Printf("Gender: ")
+	fmt.Scanln(&gender)
+	fmt.Printf("Age: ")
+	fmt.Scanln(&age)
+	fmt.Printf("Phone: ")
+	fmt.Scanln(&phone)
+	fmt.Printf("Email: ")
+	fmt.Scanln(&email)
+	var customer = model.NewCustomerExceptId(name, gender, age, phone, email)
+	isSuccess = (*c).customerService.Add(customer)
+	if isSuccess {
+		fmt.Println("----------------------- Add Customer Success -----------------------")
+	}
 }
 
 func main() {

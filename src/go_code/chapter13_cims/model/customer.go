@@ -24,6 +24,16 @@ func NewCustomer(id int, name string, gender string,
 		Email: email,
 	}
 }
+func NewCustomerExceptId(name string, gender string,
+	age int, phone string, email string, ) Customer {
+	return Customer{
+		Name: name,
+		Gender: gender,
+		Age: age,
+		Phone: phone,
+		Email: email,
+	}
+}
 
 func (c *Customer) GetInfo() string {
 	return fmt.Sprintf("%v\t%v\t%v\t%v\t%v\t%v", (*c).Id, (*c).Name, (*c).Gender, (*c).Age, (*c).Phone, (*c).Email)

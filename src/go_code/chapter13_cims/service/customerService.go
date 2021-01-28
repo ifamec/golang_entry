@@ -13,12 +13,21 @@ func NewCustomerService() *CustomerService {
 	// mode customer data
 	customerService := &CustomerService{}
 	customer := model.NewCustomer(1, "Tom", "M", 20, "000-0000-0000", "tom@gmail.com")
-	(*customerService).customerNum = 1
-	(*customerService).customers = append((*customerService).customers, customer)
+	// (*customerService).customerNum = 1
+	// (*customerService).customers = append((*customerService).customers, customer)
+	(*customerService).Add(customer)
 
 	return customerService
 }
 
 func (cs *CustomerService) List() []model.Customer {
 	return (*cs).customers
+}
+// use pointer
+func (cs *CustomerService) Add(customer model.Customer) bool {
+	// id = add order
+	(*cs).customerNum ++
+	customer.Id = (*cs).customerNum
+	(*cs).customers = append((*cs).customers, customer)
+	return true
 }

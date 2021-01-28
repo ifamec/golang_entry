@@ -40,14 +40,19 @@ type Customer struct {
 }
 ```
 0. add GetInfo method
+2. add NewCustomerExceptId function with no id
 
 
 C
 0. NewCustomerService, return customerService variable
 1. List method
     - customer list slice
-
+2. Add method
+    - append new customer to customers slice 
+    - id will use the add order
 
 V
 1. show Lists
-    - call customerService.list, show data
+    - call customerService.List, show data
+2. add method
+    - call customerService.Add
