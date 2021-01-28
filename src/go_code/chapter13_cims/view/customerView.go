@@ -29,7 +29,7 @@ func (c *customerView) mainMenu() {
 		case "2": fmt.Println("Modify")
 		case "3": (*c).deleteCustomer()
 		case "4": (*c).showList()
-		case "5": (*c).exit = true
+		case "5": (*c).exitApp()
 		default: fmt.Println("Error, Retry")
 		}
 
@@ -70,7 +70,6 @@ func (c *customerView) addCustomer() {
 	}
 }
 func (c *customerView) deleteCustomer() {
-	var confirm string
 	var isSuccess bool
 	var id int = -1
 	fmt.Println("-------------------------- Delete Customer -------------------------")
@@ -81,6 +80,7 @@ func (c *customerView) deleteCustomer() {
 		return
 	}
 	fmt.Printf("Are You Sure To Delete? (Y/N): ")
+	var confirm string
 	for {
 		fmt.Scanln(&confirm)
 		if confirm == "y" || confirm == "Y" {
@@ -97,6 +97,20 @@ func (c *customerView) deleteCustomer() {
 			break
 		}
 		fmt.Printf("Input Error, Are You Sure To Delete (Y/N): ")
+	}
+}
+func (c *customerView) exitApp() {
+	fmt.Printf("Are You Sure To Exit (Y/N): ")
+	var confirm string
+	for {
+		fmt.Scanln(&confirm)
+		if confirm == "y" || confirm == "Y" || confirm == "n" || confirm == "N" {
+			break
+		}
+		fmt.Printf("Input Error, Are You Sure To Exit (Y/N): ")
+	}
+	if confirm == "y" || confirm == "Y"{
+		(*c).exit = !(*c).exit
 	}
 }
 

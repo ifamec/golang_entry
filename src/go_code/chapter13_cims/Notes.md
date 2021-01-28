@@ -52,6 +52,7 @@ C
     - id will use the add order
 3. Delete(id int) method
     - FindById(id int) index of the object in slice
+4. Exit
 
 V
 1. show Lists
@@ -60,3 +61,4 @@ V
     - call customerService.Add
 3. delete method
     - call customerService.Delete
+4. X
