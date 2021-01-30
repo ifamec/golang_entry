@@ -70,3 +70,8 @@ func PathExists(path string) (bool, error) {
 use flag package demo: bin/checkArgs_flag
 
 ## JSON
+**serialize** `json.Marshall(v interface) ([]byte, error)`  
+- add tag to indicate the key name in json
+- Name string \`json:"mName"\`
+
+**deserialize** `json.Marshall(v interface) ([]byte, error)`
