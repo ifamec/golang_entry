@@ -74,4 +74,5 @@ use flag package demo: bin/checkArgs_flag
 - add tag to indicate the key name in json
 - Name string \`json:"mName"\`
 
-**deserialize** `json.Marshall(v interface) ([]byte, error)`
+**deserialize** `json.Unmarshall([]byte str, &data) error`
+- deserialized data should assign to variable which has original data type: struct / map / slice 
