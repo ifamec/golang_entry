@@ -7,19 +7,15 @@ e.g. 1 - 20000 find prime
 2. use concurrency -> distribute to multiple goroutines
 ```go
 func isPrime(n int) bool {
-	if n <= 1 {
-		return false
-	}
-	if n == 2 {
-		return true
-	}
-	sqrt := int(math.Sqrt(float64(n))) + 1
-	for i := 3; i <= sqrt; i += 2 {
-		if n % i == 0 {
-			return false
-		}
-	}
-	return true
+    if n <= 1 {
+        return false
+    }
+    for i := 2; i * i <= n; i ++ {
+        if n % i == 0 {
+            return false
+        }
+    }
+    return true
 }
 ```
 
@@ -120,3 +116,20 @@ when channel get closed, cannot write into the channel, but could read from chan
 #### Traverse
 1. if channel is not closed, will report deadlock error
 2. if channel is closed, everything will be good
+
+### Block
+comment go reaData() in [Code](channel06_exercise/main/main.go):  
+only write no read, causing deadlock  
+if only one goroutine is reading, [OK] frequency does not matter
+
+### Details
+
+1. Channel can be read only
+    - write only `var chan chan <- int`
+    - read only `var chan <- chan int`
+    - e.g. define a two-way channel, when pass into a function, defined W/R only in function parameters
+    - [Code](channel09/detail01/main.go)
+2. `select` solve block issue
+    - [Code](channel09/detail02/main.go)
+3. use `recover` to capture `panic`
+    - [Code](channel09/detail03/main.go)
