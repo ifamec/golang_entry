@@ -28,4 +28,20 @@ etc.
         - `iVal := rVal.Interface()`
     - interface {} -> variable
         - `interface.(variableType)` // type assertion
-    
+
+## Details
+
+1. reflect.Value.Kind // a const, the kind of the value
+2. Type and Kind could be same or different
+    - `var a int` same
+    - `var stu Student` Type: main.Student, Kind: struct
+3. variable, empty interface and reflect.Value can be transferred see above
+4. use reflection to get the value of the variable, need to match the variable type:
+    - `reflect.Value(x).Int()`
+    - struct -> type assertion
+5. use reflection to modify the value
+    - use SetXXX method with pointer 
+    - rValue.Elem().SetXXX()
+6. rValue.Elem()
+    - get the value of the pointer
+

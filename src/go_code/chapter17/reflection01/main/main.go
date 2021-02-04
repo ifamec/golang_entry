@@ -26,7 +26,9 @@ func rInt(b interface{}) {
 
 	// get real value
 	n2 := 1 + rValue.Int()
+	// n3 := rValue.Float() // Error panic: reflect: call of reflect.Value.Float on int Value [in execution]
 	fmt.Println(n2)
+	// fmt.Println(n3)
 
 	// 3. to Interface
 	iValue := rValue.Interface()
