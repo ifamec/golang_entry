@@ -298,3 +298,33 @@ basic data type & system nested function
 | int32     | int64      | itoa   | len   | make    | new     | 
 | nil       | panic      | uint64 | print | println | real    | 
 | recover   | string     | true   | uint  | uint8   | uintprt | 
+
+## const
+
+- declare with const
+- initiate at declaration
+- const cannot change
+- could only be bool, number, string
+- `const cName [type optional] = value`
+
+```go
+const (
+    x = iota
+    y
+    z
+)
+fmt.Println(x, y, z) // 0 1 2
+```
+const could be in lowercase  
+
+const still have scope
+
+### exercise
+```go
+const (
+    x = iota
+    y = iota
+    z, o = iota, iota
+)
+fmt.Println(x, y, z, o) // 0 1 2 2
+```
