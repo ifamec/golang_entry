@@ -44,4 +44,9 @@ etc.
     - rValue.Elem().SetXXX()
 6. rValue.Elem()
     - get the value of the pointer
+    
+## Best Practice
+
+- reflect.Method(i int)
+- reflect.Method.Call(in []Value) []Value // slice
 
