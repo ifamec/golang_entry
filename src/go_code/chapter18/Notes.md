@@ -36,3 +36,16 @@ request server 8888
 ```
 
 ## Project 02
+
+**Instant Messaging System**
+
+Requirements:
+- Register & Login
+- Show User List
+- Broadcast (Group Chatting)
+- P2P Chat
+- Offline Message
+
+UI: Terminal
+
+Database: Redis
