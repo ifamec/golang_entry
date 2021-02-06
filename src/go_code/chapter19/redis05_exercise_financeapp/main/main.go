@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_code/chapter12/familyAccount02/utils"
+	"go_code/chapter19/redis05_exercise_financeapp/utils"
 )
 
 func main()  {

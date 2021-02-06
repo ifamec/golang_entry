@@ -1,6 +1,12 @@
 package utils
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/gomodule/redigo/redis"
+	"strconv"
+
+	// "github.com/gomodule/redigo/redis"
+)
 
 type familyAccount struct {
 	selection string
@@ -20,7 +26,7 @@ func NewFamilyAccount() *familyAccount {
 		balance: 10000.0,
 		delta: 0.0,
 		note: "",
-		detail: "Action\tBalance\tDelta\tDetails",
+		detail: "Action\tDelta\tBalance\tDetails",
 		hasRecord: false,
 	}
 }
@@ -28,6 +34,10 @@ func (a *familyAccount) Auth() {
 	var trial int
 	var id, pwd string
 	for {
+		if (*a).exit {
+			fmt.Println("Exit")
+			return
+		}
 		fmt.Printf("Provide Your ID: ")
 		fmt.Scanln(&id)
 		fmt.Printf("Provide Your Password: ")
@@ -58,8 +68,9 @@ func (a *familyAccount) showMainMenu() {
 		fmt.Println("\t 2. Earning")
 		fmt.Println("\t 3. Expense")
 		fmt.Println("\t 4. Transfer")
-		fmt.Println("\t 5. Exit")
-		fmt.Printf("Please Select < 1 - 4 >: ")
+		fmt.Println("\t 5. Save & Exit")
+		fmt.Println("\t 6. Recover Data")
+		fmt.Printf("Please Select < 1 - 6 >: ")
 		fmt.Scanln(&(*a).selection)
 
 		switch (*a).selection {
@@ -68,6 +79,7 @@ func (a *familyAccount) showMainMenu() {
 		case "3": (*a).recordExpense()
 		case "4": (*a).transfer()
 		case "5": (*a).exitApp()
+		case "6": (*a).recoverData()
 		default:  fmt.Println("Error Retry")
 		}
 	}
@@ -87,7 +99,7 @@ func (a *familyAccount) recordEarning() {
 	(*a).balance += (*a).delta
 	fmt.Printf("Earning Details: ")
 	fmt.Scanln(&(*a).note)
-	(*a).hasRecord = ! (*a).hasRecord
+	(*a).hasRecord = true
 	(*a).detail += fmt.Sprintf("\nEarn\t%v\t%v\t%s", (*a).delta, (*a).balance, (*a).note)
 }
 func (a *familyAccount) recordExpense() {
@@ -100,7 +112,7 @@ func (a *familyAccount) recordExpense() {
 	(*a).balance -= (*a).delta
 	fmt.Printf("Earning Details: ")
 	fmt.Scanln(&(*a).note)
-	(*a).hasRecord = ! (*a).hasRecord
+	(*a).hasRecord = true
 	(*a).detail += fmt.Sprintf("\nExpense\t%v\t%v\t%s", (*a).delta, (*a).balance, (*a).note)
 }
 func (a *familyAccount) transfer() {
@@ -115,11 +127,11 @@ func (a *familyAccount) transfer() {
 		// break
 	}
 	(*a).balance -= (*a).delta
-	(*a).hasRecord = ! (*a).hasRecord
+	(*a).hasRecord = true
 	(*a).detail += fmt.Sprintf("\nTransfer\t%v\t%v\t%s", (*a).delta, (*a).balance, receiver)
 }
 func (a *familyAccount) exitApp() {
-	fmt.Printf("Are You Sure To Exit (Y/N): ")
+	fmt.Printf("Are You Sure To Save & Exit (Y/N): ")
 	var confirm string
 	for {
 		fmt.Scanln(&confirm)
@@ -129,6 +141,44 @@ func (a *familyAccount) exitApp() {
 		fmt.Printf("Input Error, Are You Sure To Exit (Y/N): ")
 	}
 	if confirm == "y" || confirm == "Y"{
-		(*a).exit = !(*a).exit
+		conn, err := redis.Dial("tcp", "localhost:6379")
+		if err != nil {
+			fmt.Println("Redis Conn Error", err)
+		}
+		defer conn.Close()
+
+		_, err = conn.Do("HMSET", "familyAccount", "Delta", (*a).delta, "Balance", (*a).balance, "Details", (*a).detail)
+		if err != nil {
+			fmt.Println("Redis HMSET Error", err)
+		}
+		fmt.Println("Save Success, Exit...")
+		(*a).exit = true
+	}
+}
+func (a *familyAccount) recoverData() {
+	fmt.Printf("Are You Sure To Recover Data (Y/N): ")
+	var confirm string
+	for {
+		fmt.Scanln(&confirm)
+		if confirm == "y" || confirm == "Y" || confirm == "n" || confirm == "N" {
+			break
+		}
+		fmt.Printf("Input Error, Are You Sure Recover Data (Y/N): ")
+	}
+	if confirm == "y" || confirm == "Y"{
+		conn, err := redis.Dial("tcp", "localhost:6379")
+		if err != nil {
+			fmt.Println("Redis Conn Error", err)
+		}
+		defer conn.Close()
+
+		values, err := redis.Strings(conn.Do("HMGET", "familyAccount", "Delta", "Balance", "Details"))
+		if err != nil {
+			fmt.Println("Redis HMSET Error", err)
+		}
+		(*a).delta, _ = strconv.ParseFloat(values[0], 64)
+		(*a).balance, _ = strconv.ParseFloat(values[1], 64)
+		(*a).detail = values[2]
+		(*a).hasRecord = true
 	}
 }
