@@ -96,3 +96,19 @@ Details:
 - `lindex key index` get value use index
 - `llen key` get list length, if not exist, return 0
 - if pop all content, the list gone automatically
+
+
+## set
+
+string type unordered
+- Hashtable data structure
+- string element
+- unordered
+- unique
+    - username unique
+
+Use:
+- `sadd key val1 val2`
+- `smembers key` // get all elements from the set
+- `sismember key val` // check if the value is in set or not
+- `srem key val` // remove certain value
