@@ -61,17 +61,17 @@ likes map in golang
 - key is unique
 
 Use: 
-- `HSET value field1 value1`  
-- `HGET value field`    
-- `HGETALL value`  
-- `HDEL value field`
+- `HSET key field1 value1`  
+- `HGET key field`    
+- `HGETALL key`  
+- `HDEL key field`
 
 Set Get Multiple  
-- `HMSET value f1 v1 f2 v2` 
-- `HMGET value f1 f2`
+- `HMSET key f1 v1 f2 v2` 
+- `HMGET key f1 f2`
 
-- `HLEN value` get length
-- `HEXISTS value field` check if field exists
+- `HLEN key` get length
+- `HEXISTS key field` check if field exists
 
 ### Practise
 ```redis
@@ -85,14 +85,14 @@ hmset stu1 name tom age 22 score 80 address seattle
 - is a liked list, has order, element could be duplicated
 
 Use:
-- `lpush value c1 c2 c3` // c3-c2-c1 // push from left
-- `lrange value start end(-1 last)`
-- `rpush value c1 c2` // push from right
-- `lpop value` // pop from left
-- `rpop value` //pop from right
-- `del value` // delete
+- `lpush key c1 c2 c3` // c3-c2-c1 // push from left
+- `lrange key start end(-1 last)`
+- `rpush key c1 c2` // push from right
+- `lpop key` // pop from left
+- `rpop key` //pop from right
+- `del key` // delete
 
 Details:
-- `lindex value index` get value use index
-- `llen value` get list length, if not exist, return 0
+- `lindex key index` get value use index
+- `llen key` get list length, if not exist, return 0
 - if pop all content, the list gone automatically
