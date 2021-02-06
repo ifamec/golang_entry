@@ -117,3 +117,22 @@ Use:
 ## redis in golang
 lib: https://github.com/gomodule/redigo
 e.g. [redisgo](redis01/main/main.go) 
+
+## Redis Pool
+- start several connections in redis pool
+- pickup and use directly from the pool
+- save time
+
+```go
+var pool *redis.Pool
+pool = &redis.Pool{
+	MaxIdle: 8, // maximum connection
+	MaxActive: 0, // how many could connect to db, 0 -> unlimited
+	IdleTimeout: 100, // maximum timeout
+	Dial: func () (redis.Conn, error) {
+        return redis.Dial("tcp", "localhost:6379")
+	}
+}
+c := pool.Get()
+pool.Close() // once closed, gone forever
+```
