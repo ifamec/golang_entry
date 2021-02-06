@@ -112,3 +112,8 @@ Use:
 - `smembers key` // get all elements from the set
 - `sismember key val` // check if the value is in set or not
 - `srem key val` // remove certain value
+
+
+## redis in golang
+lib: https://github.com/gomodule/redigo
+e.g. [redisgo](redis01/main/main.go) 
