@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go_code/chapter13_cims/model"
-	"go_code/chapter13_cims/service"
+	"go_code/chapter19/redis06_exercise_cims/model"
+	"go_code/chapter19/redis06_exercise_cims/service"
 )
 
 type customerView struct {
@@ -20,8 +20,11 @@ func (c *customerView) mainMenu() {
 		fmt.Println("\t\t2. Modify Customer")
 		fmt.Println("\t\t3. Delete Customer")
 		fmt.Println("\t\t4. Customer List")
-		fmt.Println("\t\t5. Exit System")
-		fmt.Print("Select < 1 - 5 >: ")
+		fmt.Println("\t\t5. Query Customer")
+		fmt.Println("\t\t6. Exit System")
+		fmt.Println("\t\t7. Save Data")
+		fmt.Println("\t\t8. Recover Data")
+		fmt.Print("Select < 1 - 8 >: ")
 		fmt.Scanln(&(*c).selection)
 
 		switch (*c).selection {
@@ -29,7 +32,10 @@ func (c *customerView) mainMenu() {
 		case "2": (*c).modifyCustomer()
 		case "3": (*c).deleteCustomer()
 		case "4": (*c).showList()
-		case "5": (*c).exitApp()
+		case "5": (*c).queryCustomer()
+		case "6": (*c).exitApp()
+		case "7": (*c).saveData()
+		case "8": (*c).recoverData()
 		default: fmt.Println("Error, Retry")
 		}
 
@@ -154,6 +160,9 @@ func (c *customerView) modifyCustomer() {
 		fmt.Printf("Input Error, Are You Sure To Delete (Y/N): ")
 	}
 }
+func (c *customerView) queryCustomer() {
+	fmt.Println("Not Available.")
+}
 func (c *customerView) exitApp() {
 	fmt.Printf("Are You Sure To Exit (Y/N): ")
 	var confirm string
@@ -165,7 +174,35 @@ func (c *customerView) exitApp() {
 		fmt.Printf("Input Error, Are You Sure To Exit (Y/N): ")
 	}
 	if confirm == "y" || confirm == "Y"{
-		(*c).exit = !(*c).exit
+		(*c).exit = true
+	}
+}
+func (c *customerView) saveData() {
+	fmt.Printf("Are You Sure To Recover Data (Y/N): ")
+	var confirm string
+	for {
+		fmt.Scanln(&confirm)
+		if confirm == "y" || confirm == "Y" || confirm == "n" || confirm == "N" {
+			break
+		}
+		fmt.Printf("Input Error, Are You Sure To Recover Data (Y/N): ")
+	}
+	if confirm == "y" || confirm == "Y"{
+		(*c).customerService.SaveData()
+	}
+}
+func (c *customerView) recoverData() {
+	fmt.Printf("Are You Sure To Recover Data (Y/N): ")
+	var confirm string
+	for {
+		fmt.Scanln(&confirm)
+		if confirm == "y" || confirm == "Y" || confirm == "n" || confirm == "N" {
+			break
+		}
+		fmt.Printf("Input Error, Are You Sure To Recover Data (Y/N): ")
+	}
+	if confirm == "y" || confirm == "Y"{
+		(*c).customerService.RecoverData()
 	}
 }
 
