@@ -20,7 +20,7 @@ func NewFamilyAccount() *familyAccount {
 		balance: 10000.0,
 		delta: 0.0,
 		note: "",
-		detail: "Action\tBalance\tDelta\tDetails",
+		detail: "Action\tDelta\tBalance\tDetails",
 		hasRecord: false,
 	}
 }
@@ -28,6 +28,10 @@ func (a *familyAccount) Auth() {
 	var trial int
 	var id, pwd string
 	for {
+		if (*a).exit {
+			fmt.Println("Exit")
+			return
+		}
 		fmt.Printf("Provide Your ID: ")
 		fmt.Scanln(&id)
 		fmt.Printf("Provide Your Password: ")
@@ -87,7 +91,7 @@ func (a *familyAccount) recordEarning() {
 	(*a).balance += (*a).delta
 	fmt.Printf("Earning Details: ")
 	fmt.Scanln(&(*a).note)
-	(*a).hasRecord = ! (*a).hasRecord
+	(*a).hasRecord = true
 	(*a).detail += fmt.Sprintf("\nEarn\t%v\t%v\t%s", (*a).delta, (*a).balance, (*a).note)
 }
 func (a *familyAccount) recordExpense() {
@@ -100,7 +104,7 @@ func (a *familyAccount) recordExpense() {
 	(*a).balance -= (*a).delta
 	fmt.Printf("Earning Details: ")
 	fmt.Scanln(&(*a).note)
-	(*a).hasRecord = ! (*a).hasRecord
+	(*a).hasRecord = true
 	(*a).detail += fmt.Sprintf("\nExpense\t%v\t%v\t%s", (*a).delta, (*a).balance, (*a).note)
 }
 func (a *familyAccount) transfer() {
@@ -115,7 +119,7 @@ func (a *familyAccount) transfer() {
 		// break
 	}
 	(*a).balance -= (*a).delta
-	(*a).hasRecord = ! (*a).hasRecord
+	(*a).hasRecord = true
 	(*a).detail += fmt.Sprintf("\nTransfer\t%v\t%v\t%s", (*a).delta, (*a).balance, receiver)
 }
 func (a *familyAccount) exitApp() {
@@ -129,6 +133,6 @@ func (a *familyAccount) exitApp() {
 		fmt.Printf("Input Error, Are You Sure To Exit (Y/N): ")
 	}
 	if confirm == "y" || confirm == "Y"{
-		(*a).exit = !(*a).exit
+		(*a).exit = true
 	}
 }
