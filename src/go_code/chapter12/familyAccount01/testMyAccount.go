@@ -8,7 +8,7 @@ func main() {
 	var balance float64 = 10000
 	var delta float64 = 0.0
 	var note string = ""
-	var detail string = "Action\tBalance\tDelta\tDetails"
+	var detail string = "Action\tDelta\tBalance\tDetails"
 	var hasRecord bool = false
 
 	for {
@@ -40,7 +40,7 @@ func main() {
 			balance += delta
 			fmt.Printf("Earning Details: ")
 			fmt.Scanln(&note)
-			hasRecord = ! hasRecord
+			hasRecord = true
 			detail += fmt.Sprintf("\nEarn\t%v\t%v\t%s", delta, balance, note)
 		case "3":
 			fmt.Printf("Record Expense: ")
@@ -52,7 +52,7 @@ func main() {
 			balance -= delta
 			fmt.Printf("Earning Details: ")
 			fmt.Scanln(&note)
-			hasRecord = ! hasRecord
+			hasRecord = true
 			detail += fmt.Sprintf("\nExpense\t%v\t%v\t%s", delta, balance, note)
 		case "4":
 			fmt.Printf("Are You Sure To Exit (Y/N): ")
