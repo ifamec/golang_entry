@@ -78,3 +78,21 @@ Set Get Multiple
 hmset stu1 name tom age 22 score 80 address seattle
 ```
 
+## List
+
+- ordered by insert position
+- could add data in front or rear
+- is a liked list, has order, element could be duplicated
+
+Use:
+- `lpush value c1 c2 c3` // c3-c2-c1 // push from left
+- `lrange value start end(-1 last)`
+- `rpush value c1 c2` // push from right
+- `lpop value` // pop from left
+- `rpop value` //pop from right
+- `del value` // delete
+
+Details:
+- `lindex value index` get value use index
+- `llen value` get list length, if not exist, return 0
+- if pop all content, the list gone automatically
