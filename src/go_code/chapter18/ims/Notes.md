@@ -55,4 +55,7 @@
 1. Login Page
 2. Login Validation
     - server 8889 listen
-    - client a
+    - client sent data length then data
+    - server check data response per condition
+    - client show UI per server response
+    - COMDAT
