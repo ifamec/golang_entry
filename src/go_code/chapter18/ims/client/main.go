@@ -12,11 +12,12 @@ func main() {
 	var key int
 	var loop bool = true
 	for loop {
-		fmt.Println("-------- Welcome... ------")
+		fmt.Println()
+		fmt.Println("-------- Welcome IMS --------")
 		fmt.Println("\t 1. Login")
 		fmt.Println("\t 2. Signup")
 		fmt.Println("\t 3. Exit")
-		fmt.Print("--------  Select:")
+		fmt.Print("--------  Select: ")
 		fmt.Scanln(&key)
 
 		switch key {
@@ -36,9 +37,9 @@ func main() {
 	// show new info per user input
 	if key == 1 {
 		// login
-		fmt.Print("ID: ")
+		fmt.Printf("ID: ")
 		fmt.Scanf("%d\n", &userId)
-		fmt.Print("Password: ")
+		fmt.Printf("Password: ")
 		fmt.Scanf("%s\n", &userPwd)
 		// login.go
 		err := login(userId, userPwd)
