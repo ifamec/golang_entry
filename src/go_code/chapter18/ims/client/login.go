@@ -67,7 +67,24 @@ func login(userId int, userPwd string) (err error) {
 	// fmt.Println("Client : Msg Sent Success, Len", len(data), "Data:", string(data))
 	fmt.Println("Client : Msg Sent Success")
 
-	// 8 handel server response
+	// 8 handle server response
+	msg, err = readPkg(conn)
+	if err != nil {
+		fmt.Println("Client : readPkg Error -", err)
+		return
+	}
 
-	return nil
+	var loginRtnMsg message.LoginRtnMsg
+	err = json.Unmarshal([]byte(msg.Data), &loginRtnMsg)
+	if err != nil {
+		fmt.Println("Client : Unmarshall Server Response Error -", err)
+		return
+	}
+	if loginRtnMsg.Code == 200 {
+		fmt.Println("Login Success")
+	} else if loginRtnMsg.Code == 500 {
+		fmt.Println(loginRtnMsg.Error)
+	}
+
+	return
 }

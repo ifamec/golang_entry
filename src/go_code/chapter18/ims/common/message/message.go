@@ -5,6 +5,7 @@ package message
 const (
 	LoginMsgType    = "LoginMsg"
 	LoginRtnMsgType = "LoginRtnMsg"
+	SignupMsgType   = "SignupMsg"
 )
 
 type Message struct {
@@ -22,4 +23,7 @@ type LoginMsg struct {
 type LoginRtnMsg struct {
 	Code  int    `json:"code"`  // 500 not registered, 200 success
 	Error string `json:"error"` // Error message
+}
+
+type SignupMsg struct {
 }

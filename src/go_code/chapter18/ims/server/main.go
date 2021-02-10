@@ -39,7 +39,86 @@ func readPkg(conn net.Conn) (msg message.Message, err error) {
 
 	return
 }
+func writePkg(conn net.Conn, data []byte) (err error) {
+	// 1. send length
+	var pkgLen uint32
+	pkgLen = uint32(len(data))
+	var buf [4]byte
+	binary.BigEndian.PutUint32(buf[:4], pkgLen)
+	n, err := conn.Write(buf[:4])
+	if n != 4 || err != nil {
+		fmt.Println("Server : Conn Error -", err)
+	}
+	fmt.Println("Server : Msg Len Sent Success,", n, "Bytes Sent")
 
+	// 7.2 send data
+	n, err = conn.Write(data)
+	if n != int(pkgLen) || err != nil {
+		fmt.Println("Server : Conn Error -", err)
+	}
+	// fmt.Println("Client : Msg Sent Success, Len", len(data), "Data:", string(data))
+	fmt.Println("Server : Msg Sent Success")
+	return
+}
+// server process login
+func serverProcessLogin(conn net.Conn, msg *message.Message) (err error) {
+	// 1. get Data, deserialize to LoginMsg
+	var loginMsg message.LoginMsg
+	err = json.Unmarshal([]byte(msg.Data), &loginMsg)
+	if err != nil {
+		fmt.Println("Server.process.serverProcessMsg.serverProcessLogin : Error -", err)
+		return
+	}
+
+	// declare Message
+	var rtnMsg message.Message
+	rtnMsg.Type = message.LoginRtnMsgType
+
+	// declare LoginRtnMsg and assign value
+	var loginRtnMsg message.LoginRtnMsg
+	if loginMsg.UserId == 100 && loginMsg.UserPwd == "123456" {
+		// valid
+		loginRtnMsg.Code = 200
+	} else {
+		// invalid
+		loginRtnMsg.Code = 500
+		loginRtnMsg.Error = "User InValid, Please SignUp"
+	}
+
+	// serialize
+	data, err := json.Marshal(loginRtnMsg)
+	if err != nil {
+		fmt.Println("Server.process.serverProcessMsg.serverProcessLogin : loginRtnMsg Marshall Error -", err)
+		return
+	}
+
+	// assign data
+	rtnMsg.Data = string(data)
+
+	// marshall msg
+	data, err = json.Marshal(rtnMsg)
+	if err != nil {
+		fmt.Println("Server.process.serverProcessMsg.serverProcessLogin : rtnMsg Marshall Error -", err)
+		return
+	}
+
+	// send data -> writePkg
+	err = writePkg(conn, data)
+
+	return
+}
+
+// handle msg based on msg type
+func serverProcessMsg(conn net.Conn, msg *message.Message) (err error) {
+	switch msg.Type {
+	case message.LoginMsgType:
+		err = serverProcessLogin(conn, msg)
+	case message.SignupMsgType:
+	default:
+		fmt.Println("Msg Type Not Exist")
+	}
+	return
+}
 // communication
 func process(conn net.Conn) {
 	// read client message
@@ -60,6 +139,11 @@ func process(conn net.Conn) {
 		}
 		fmt.Println("Server.process : readPkg Success -", msg)
 
+		err = serverProcessMsg(conn, &msg)
+		if err != nil {
+			fmt.Println("Server.process : serverProcessMsg Error -", err)
+			return
+		}
 	}
 }
 
