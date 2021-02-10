@@ -58,7 +58,16 @@ func login(userId int, userPwd string) (err error) {
 		fmt.Println("Client : Conn Error -", err)
 	}
 	fmt.Println("Client : Msg Len Sent Success,", n, "Bytes Sent")
-	fmt.Println("Client : Msg Len Sent Success, Len", len(data), "Data:", string(data))
+
+	// 7.2 send data
+	_, err = conn.Write(data)
+	if err != nil {
+		fmt.Println("Client : Conn Error -", err)
+	}
+	// fmt.Println("Client : Msg Sent Success, Len", len(data), "Data:", string(data))
+	fmt.Println("Client : Msg Sent Success")
+
+	// 8 handel server response
 
 	return nil
 }

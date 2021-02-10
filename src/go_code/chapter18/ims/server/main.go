@@ -1,25 +1,64 @@
 package main
 
 import (
+	"encoding/binary"
+	"encoding/json"
+	_ "errors"
 	"fmt"
+	"go_code/chapter18/ims/common/message"
+	"io"
 	"net"
 )
+
+func readPkg(conn net.Conn) (msg message.Message, err error) {
+	buf := make([]byte, 4096)
+	fmt.Println("Server.process.readPkg : Wait For Client Message")
+	_, err = conn.Read(buf[:4])
+	if err != nil {
+		fmt.Println("Server.process.readPkg : Conn Read Msg Header Error -", err)
+		// err = errors.New("read msg header error")
+		return
+	}
+	// fmt.Println("Client.process : Read Success -", buf[:4])
+	var pkgLen uint32
+	pkgLen = binary.BigEndian.Uint32(buf[:4])
+
+	// read content
+	n, err := conn.Read(buf[:pkgLen]) // conn.Read could be blocked only if both side is not closed
+	if n != int(pkgLen) || err != nil {
+		fmt.Println("Server.process.readPkg : Conn Read Msg Body Error -", err)
+		// err = errors.New("read msg body error")
+		return
+	}
+	// pkgLen to message.Message
+	err = json.Unmarshal(buf[:pkgLen], &msg)
+	if err != nil {
+		fmt.Println("Server.process.readPkg : Unmarshall Msg Error -", err)
+		return
+	}
+
+	return
+}
 
 // communication
 func process(conn net.Conn) {
 	// read client message
 	defer conn.Close()
-	buf := make([]byte, 4096)
 
 	// read client msg
 	for {
-		fmt.Println("Client.process : Wait For Client Message")
-		_, err := conn.Read(buf[:4])
+		// pack read data as a function readPkg
+		msg, err := readPkg(conn)
 		if err != nil {
-			fmt.Println("Client.process : Read Error -", err)
-			return
+			if err == io.EOF {
+				fmt.Println("Server.process : Client Exit")
+				return
+			} else {
+				fmt.Println("Server.process : readPkg Error -", err)
+				return
+			}
 		}
-		fmt.Println("Client.process : Read Success -", buf[:4])
+		fmt.Println("Server.process : readPkg Success -", msg)
 
 	}
 }
