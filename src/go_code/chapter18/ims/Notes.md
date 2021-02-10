@@ -57,5 +57,10 @@
     - server 8889 listen
     - client sent data length then data
     - server check data response per condition
+        - goroutine - `ServerProcessMsg`
+            - call functions by message type
+                - handle login `ServerProcessLogin`
+                - handle signup
+                - ...
     - client show UI per server response
     - COMDAT
