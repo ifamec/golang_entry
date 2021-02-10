@@ -9,13 +9,13 @@ import (
 func process(conn net.Conn) {
 	// read client message
 	defer conn.Close()
+	buf := make([]byte, 4096)
 
 	// read client msg
 	for {
-		buf := make([]byte, 4096)
 		fmt.Println("Client.process : Wait For Client Message")
-		n, err := conn.Read(buf[:4])
-		if n != 4 || err != nil {
+		_, err := conn.Read(buf[:4])
+		if err != nil {
 			fmt.Println("Client.process : Read Error -", err)
 			return
 		}
