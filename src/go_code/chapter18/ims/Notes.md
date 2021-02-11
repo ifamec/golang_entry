@@ -64,3 +64,7 @@
                 - ...
     - client show UI per server response
     - COMDAT
+3. Refactor
+    1. create empty files into dirs(pkgs)
+    2. refactor code into files
+    
