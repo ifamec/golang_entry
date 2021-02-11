@@ -1,14 +1,18 @@
-package main
+package processes
 
 import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"go_code/chapter18/ims/client/utils"
 	"go_code/chapter18/ims/common/message"
 	"net"
 )
 
-func login(userId int, userPwd string) (err error) {
+type UserProcess struct {
+}
+
+func (u *UserProcess) Login(userId int, userPwd string) (err error) {
 	// fmt.Println("Your Input:", userId, userPwd)
 	// return nil
 
@@ -68,7 +72,11 @@ func login(userId int, userPwd string) (err error) {
 	fmt.Println("Client : Msg Sent Success")
 
 	// 8 handle server response
-	msg, err = readPkg(conn)
+	transfer := &utils.Transfer{
+		Conn: conn,
+	}
+
+	msg, err = transfer.ReadPkg()
 	if err != nil {
 		fmt.Println("Client : readPkg Error -", err)
 		return
@@ -81,7 +89,13 @@ func login(userId int, userPwd string) (err error) {
 		return
 	}
 	if loginRtnMsg.Code == 200 {
-		fmt.Println("Login Success")
+		// fmt.Println("Login Success")
+		// another goroutine for server connection if anything pushed show
+		go msgPush(conn)
+		// show main menu
+		for {
+			ShowMenu()
+		}
 	} else if loginRtnMsg.Code == 500 {
 		fmt.Println(loginRtnMsg.Error)
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go_code/chapter18/ims/client/processes"
 	"os"
 )
 
@@ -10,8 +11,7 @@ var userPwd string
 
 func main() {
 	var key int
-	var loop bool = true
-	for loop {
+	for {
 		fmt.Println()
 		fmt.Println("-------- Welcome IMS --------")
 		fmt.Println("\t 1. Login")
@@ -23,10 +23,19 @@ func main() {
 		switch key {
 		case 1:
 			fmt.Println("Login")
-			loop = false
+			// login
+			fmt.Printf("ID: ")
+			fmt.Scanf("%d\n", &userId)
+			fmt.Printf("Password: ")
+			fmt.Scanf("%s\n", &userPwd)
+			// userProcess
+			user := &processes.UserProcess{}
+			err := user.Login(userId, userPwd)
+			if err != nil {
+				fmt.Println("Login Error:", err)
+			}
 		case 2:
 			fmt.Println("Signup")
-			loop = false
 		case 3:
 			fmt.Println("Exit")
 			os.Exit(0)
@@ -34,19 +43,5 @@ func main() {
 			fmt.Println("Invalid, Retry")
 		}
 	}
-	// show new info per user input
-	if key == 1 {
-		// login
-		fmt.Printf("ID: ")
-		fmt.Scanf("%d\n", &userId)
-		fmt.Printf("Password: ")
-		fmt.Scanf("%s\n", &userPwd)
-		// login.go
-		err := login(userId, userPwd)
-		if err != nil {
-			fmt.Println("Login Error:", err)
-		}
-	} else if key == 2 {
-		fmt.Println("Sign Up")
-	}
+
 }
