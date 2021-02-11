@@ -65,6 +65,7 @@
     - client show UI per server response
     - COMDAT
 3. Refactor
+   ![ims_refactor](src/ims_refactor.png)
     1. create empty files into dirs(pkgs)
     2. refactor code into files
     
