@@ -68,4 +68,9 @@
    ![ims_refactor](src/ims_refactor.png)
     1. create empty files into dirs(pkgs)
     2. refactor code into files
+4. DB - Redis
+   ![ims_db](src/ims_db.png)
+    - redis Pool
+    - userDao to connect Redis
+    - use redis to validate login
     
