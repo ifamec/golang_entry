@@ -77,5 +77,5 @@
     - sign up and save data to redis
         0. refactor user
         1. new message type in `message.go`
-        2. 
+        2. client side get user input
     
