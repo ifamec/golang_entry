@@ -3,9 +3,10 @@ package message
 // message type const
 
 const (
-	LoginMsgType    = "LoginMsg"
-	LoginRtnMsgType = "LoginRtnMsg"
-	SignupMsgType   = "SignupMsg"
+	LoginMsgType     = "LoginMsg"
+	LoginRtnMsgType  = "LoginRtnMsg"
+	SignupMsgType    = "SignupMsg"
+	SignupRtnMsgType = "SignupRtnMsg"
 )
 
 type Message struct {
@@ -26,4 +27,10 @@ type LoginRtnMsg struct {
 }
 
 type SignupMsg struct {
+	User User `json:"user"`
+}
+
+type SignupRtnMsg struct {
+	Code  int    `json:"code"`  // 200 success, 400 user exist
+	Error string `json:"error"` // Error message
 }
