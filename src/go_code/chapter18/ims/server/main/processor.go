@@ -22,6 +22,10 @@ func (p *Processor) serverProcessMsg(msg *message.Message) (err error) {
 		}
 		err = user.ServerProcessLogin(msg)
 	case message.SignupMsgType:
+		user := &processes.UserProcess{
+			Conn: (*p).Conn,
+		}
+		err = user.ServerProcessSignup(msg)
 	default:
 		fmt.Println("Msg Type Not Exist")
 	}

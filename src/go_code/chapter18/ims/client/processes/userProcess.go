@@ -102,3 +102,92 @@ func (u *UserProcess) Login(userId int, userPwd string) (err error) {
 
 	return
 }
+
+func (u *UserProcess) Signup(userId int, userPwd, userName string) (err error) {
+
+	// 1 connect to server
+	conn, err := net.Dial("tcp", "localhost:8889") // read config in future
+	if err != nil {
+		fmt.Println("Client : Dail Error -", err)
+		return err
+	}
+	defer conn.Close()
+
+	// 2 conn send msg to server
+	var msg message.Message
+	msg.Type = message.SignupMsgType
+
+	// 3 create signup message
+	var signupMsg message.SignupMsg
+	signupMsg.User.UserId = userId
+	signupMsg.User.UserPwd = userPwd
+	signupMsg.User.UserName = userName
+
+	// 4 serialize loginMsg
+	data, err := json.Marshal(signupMsg)
+	if err != nil {
+		fmt.Println("Client : Signup Msg json.Marshall Error -", err)
+		return err
+	}
+
+	// 5 assign to msg.Data
+	msg.Data = string(data)
+
+	// 6 serialize msg
+	data, err = json.Marshal(msg)
+	if err != nil {
+		fmt.Println("Client : Signup Msg json.Marshall Error -", err)
+		return err
+	}
+
+	// // 7.1 send data length
+	// // get length then to []byte
+	// var pkgLen uint32
+	// pkgLen = uint32(len(data))
+	// var buf [4]byte
+	// binary.BigEndian.PutUint32(buf[:4], pkgLen)
+	// n, err := conn.Write(buf[:4])
+	// if n != 4 || err != nil {
+	// 	fmt.Println("Client : Conn Error -", err)
+	// }
+	// fmt.Println("Client : Msg Len Sent Success,", n, "Bytes Sent")
+	//
+	// // 7.2 send data
+	// _, err = conn.Write(data)
+	// if err != nil {
+	// 	fmt.Println("Client : Conn Error -", err)
+	// }
+	// // fmt.Println("Client : Msg Sent Success, Len", len(data), "Data:", string(data))
+	// fmt.Println("Client : Msg Sent Success")
+
+	transfer := &utils.Transfer{
+		Conn: conn,
+	}
+	// 7 send data
+	err = transfer.WritePkg(data)
+	if err != nil {
+		fmt.Println("Client : Signup WritePkg Error -", err)
+		return
+	}
+
+	// 8 handle server response
+	msg, err = transfer.ReadPkg()
+	if err != nil {
+		fmt.Println("Client : Signup ReadPkg Error -", err)
+		return
+	}
+
+	var signupRtnMsg message.SignupRtnMsg
+	err = json.Unmarshal([]byte(msg.Data), &signupRtnMsg)
+	if err != nil {
+		fmt.Println("Client : Unmarshall Server Response Error -", err)
+		return
+	}
+	if signupRtnMsg.Code == 200 {
+		fmt.Println("Signup Success, Please Login")
+	} else {
+		fmt.Println(signupRtnMsg.Error)
+	}
+
+	return
+}

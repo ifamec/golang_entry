@@ -81,3 +81,60 @@ func (u *UserProcess) ServerProcessLogin(msg *message.Message) (err error) {
 
 	return
 }
+
+func (u *UserProcess) ServerProcessSignup(msg *message.Message) (err error) {
+	// 1. get Data, deserialize to LoginMsg
+	var signupMsg message.SignupMsg
+	err = json.Unmarshal([]byte(msg.Data), &signupMsg)
+	if err != nil {
+		fmt.Println("Server.process.serverProcessMsg.ServerProcessSignup : Error -", err)
+		return
+	}
+
+	// declare Message
+	var rtnMsg message.Message
+	rtnMsg.Type = message.LoginRtnMsgType
+
+	// declare signupRtnMsg and assign value
+	var signupRtnMsg message.SignupRtnMsg
+
+	// USE ImsUserDao and validate in redis
+	err = model.ImsUserDao.Signup(&signupMsg.User)
+	if err != nil {
+		if err == model.ERROR_USER_EXISTS {
+			signupRtnMsg.Code = 500
+			signupRtnMsg.Error = err.Error()
+		} else {
+			signupRtnMsg.Code = 505
+			signupRtnMsg.Error = "Server Error"
+		}
+	} else {
+		signupRtnMsg.Code = 200
+		fmt.Println("Server : UserDao Signup Success")
+	}
+
+	// serialize
+	data, err := json.Marshal(signupRtnMsg)
+	if err != nil {
+		fmt.Println("Server.process.serverProcessMsg.serverProcessSignup : signupRtnMsg Marshall Error -", err)
+		return
+	}
+
+	// assign data
+	rtnMsg.Data = string(data)
+
+	// marshall msg
+	data, err = json.Marshal(rtnMsg)
+	if err != nil {
+		fmt.Println("Server.process.serverProcessMsg.serverProcessSignup : rtnMsg Marshall Error -", err)
+		return
+	}
+
+	// send data -> writePkg
+	transfer := utils.Transfer{
+		Conn: (*u).Conn,
+	}
+	err = transfer.WritePkg(data)
+
+	return
+}

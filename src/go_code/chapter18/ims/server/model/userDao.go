@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gomodule/redigo/redis"
+	"go_code/chapter18/ims/common/message"
 )
 
 // init a userDao when server start
@@ -65,6 +66,38 @@ func (ud *UserDao) Login(userId int, userPwd string) (user *User, err error) {
 		err = ERROR_USER_PWD_INVALID
 		return
 	}
+
+	return
+}
+
+
+// signup validation
+
+func (ud *UserDao) Signup(user *message.User) (err error) {
+	// get conn from pool
+	conn := (*ud).pool.Get()
+	defer conn.Close()
+
+	// check if user exist
+	_, err = (*ud).getUserById(conn, user.UserId)
+	if err == nil {
+		err = ERROR_USER_EXISTS
+		return
+	}
+
+	// sign up
+	data, err := json.Marshal(user)
+	if err != nil {
+		fmt.Println("Server.UserDao : Marshall Error -", err)
+		return
+	}
+
+	_, err = conn.Do("HSET", "users", user.UserId, string(data))
+	if err != nil {
+		fmt.Println("Server.UserDao : Signup Error -", err)
+		return
+	}
+
 
 	return
 }

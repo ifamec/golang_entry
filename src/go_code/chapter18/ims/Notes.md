@@ -73,4 +73,10 @@
     - redis Pool
     - userDao to connect Redis
     - use redis to validate login
+5. Signup
+    - sign up and save data to redis
+        0. refactor user
+        1. new message type in `message.go`
+        2. client side get user input
+        3. server side add signup in userDao
     

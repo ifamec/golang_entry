@@ -8,6 +8,7 @@ import (
 
 var userId int
 var userPwd string
+var userName string
 
 func main() {
 	var key int
@@ -36,6 +37,19 @@ func main() {
 			}
 		case 2:
 			fmt.Println("Signup")
+			// login
+			fmt.Printf("Signup - ID: ")
+			fmt.Scanf("%d\n", &userId)
+			fmt.Printf("Signup - Password: ")
+			fmt.Scanf("%s\n", &userPwd)
+			fmt.Printf("Signup - userName: ")
+			fmt.Scanf("%s\n", &userName)
+			// userProcess
+			user := &processes.UserProcess{}
+			err := user.Signup(userId, userPwd, userName)
+			if err != nil {
+				fmt.Println("Login Error:", err)
+			}
 		case 3:
 			fmt.Println("Exit")
 			os.Exit(0)
