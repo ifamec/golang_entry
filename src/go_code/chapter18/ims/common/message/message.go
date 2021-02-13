@@ -22,8 +22,9 @@ type LoginMsg struct {
 }
 
 type LoginRtnMsg struct {
-	Code  int    `json:"code"`  // 500 not registered, 200 success
-	Error string `json:"error"` // Error message
+	Code    int    `json:"code"`  // 500 not registered, 200 success
+	Error   string `json:"error"` // Error message
+	UserIds []int
 }
 
 type SignupMsg struct {

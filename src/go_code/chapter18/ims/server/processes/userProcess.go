@@ -11,6 +11,7 @@ import (
 
 type UserProcess struct {
 	Conn net.Conn
+	UserId int
 }
 
 func (u *UserProcess) ServerProcessLogin(msg *message.Message) (err error) {
@@ -44,17 +45,14 @@ func (u *UserProcess) ServerProcessLogin(msg *message.Message) (err error) {
 		}
 	} else {
 		loginRtnMsg.Code = 200
+		// update userId in `u` add user into onlineUser list `userMgr`
+		(*u).UserId = loginMsg.UserId
+		userMgr.AddOnlineUser(u)
+		for id, _ := range userMgr.onlineUsers {
+			loginRtnMsg.UserIds = append(loginRtnMsg.UserIds, id)
+		}
 		fmt.Println("Server.UserDaoRtn:", user)
 	}
-
-	// if loginMsg.UserId == 100 && loginMsg.UserPwd == "123456" {
-	// 	// valid
-	// 	loginRtnMsg.Code = 200
-	// } else {
-	// 	// invalid
-	// 	loginRtnMsg.Code = 500
-	// 	loginRtnMsg.Error = "User InValid, Please SignUp"
-	// }
 
 	// serialize
 	data, err := json.Marshal(loginRtnMsg)
