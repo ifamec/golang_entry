@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go_code/chapter18/ims/common/message"
+	"go_code/chapter18/ims/server/model"
 	"go_code/chapter18/ims/server/utils"
 	"net"
 )
@@ -27,14 +28,33 @@ func (u *UserProcess) ServerProcessLogin(msg *message.Message) (err error) {
 
 	// declare LoginRtnMsg and assign value
 	var loginRtnMsg message.LoginRtnMsg
-	if loginMsg.UserId == 100 && loginMsg.UserPwd == "123456" {
-		// valid
-		loginRtnMsg.Code = 200
+
+	// USE ImsUserDao and validate in redis
+	user, err := model.ImsUserDao.Login(loginMsg.UserId, loginMsg.UserPwd)
+	if err != nil {
+		if err == model.ERROR_USER_NOTEXISTS {
+			loginRtnMsg.Code = 500
+			loginRtnMsg.Error = err.Error()
+		} else if err == model.ERROR_USER_PWD_INVALID {
+			loginRtnMsg.Code = 403
+			loginRtnMsg.Error = err.Error()
+		} else {
+			loginRtnMsg.Code = 505
+			loginRtnMsg.Error = "Server Error"
+		}
 	} else {
-		// invalid
-		loginRtnMsg.Code = 500
-		loginRtnMsg.Error = "User InValid, Please SignUp"
+		loginRtnMsg.Code = 200
+		fmt.Println("Server.UserDaoRtn:", user)
 	}
+
+	// if loginMsg.UserId == 100 && loginMsg.UserPwd == "123456" {
+	// 	// valid
+	// 	loginRtnMsg.Code = 200
+	// } else {
+	// 	// invalid
+	// 	loginRtnMsg.Code = 500
+	// 	loginRtnMsg.Error = "User InValid, Please SignUp"
+	// }
 
 	// serialize
 	data, err := json.Marshal(loginRtnMsg)
