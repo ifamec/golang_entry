@@ -78,4 +78,5 @@
         0. refactor user
         1. new message type in `message.go`
         2. client side get user input
+        3. server side add signup in userDao
     

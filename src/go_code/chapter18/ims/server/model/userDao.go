@@ -68,3 +68,35 @@ func (ud *UserDao) Login(userId int, userPwd string) (user *User, err error) {
 
 	return
 }
+
+
+// signup validation
+
+func (ud *UserDao) Signup(user *User) (err error) {
+	// get conn from pool
+	conn := (*ud).pool.Get()
+	defer conn.Close()
+
+	// check if user exist
+	user, err = (*ud).getUserById(conn, user.UserId)
+	if err == nil {
+		err = ERROR_USER_EXISTS
+		return
+	}
+
+	// sign up
+	data, err := json.Marshal(user)
+	if err != nil {
+		fmt.Println("Server.UserDao : Marshall Error -", err)
+		return
+	}
+
+	_, err = conn.Do("HSET", "users", user.UserId, string(data))
+	if err != nil {
+		fmt.Println("Server.UserDao : Signup Error -", err)
+		return
+	}
+
+
+	return
+}
