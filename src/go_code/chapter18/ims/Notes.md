@@ -79,4 +79,11 @@
         1. new message type in `message.go`
         2. client side get user input
         3. server side add signup in userDao
+6. Fn - Return User Status after login
+   ![ims_onlinelist](src/ims_onlinelist.png)
+     - maintain `onlineUsers map[int]*UserProcess`
+    - `userMgr.go` to CRUD
+    - modify LoginMsg
+        - add onlineUser slice 
+    - show online user list
     
