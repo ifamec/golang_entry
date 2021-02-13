@@ -96,7 +96,7 @@ func (u *UserProcess) Login(userId int, userPwd string) (err error) {
 		for {
 			ShowMenu()
 		}
-	} else if loginRtnMsg.Code == 500 {
+	} else {
 		fmt.Println(loginRtnMsg.Error)
 	}
 

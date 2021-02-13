@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_code/chapter18/ims/server/model"
 	"net"
-	"time"
 )
 
 // func readPkg(conn net.Conn) (msg message.Message, err error) {
@@ -130,15 +128,8 @@ func process(conn net.Conn) {
 	}
 }
 
-// init userDao
-func initUserDao()  {
-	model.ImsUserDao = model.NewUserDao(pool) // the pool is global
-}
-
 func main() {
 	// listen port at 8889
-	initPool("localhost:6379", 16, 0, 300*time.Second)
-	initUserDao()
 
 	fmt.Println("Refactor Server : Start Listen At 8889")
 
