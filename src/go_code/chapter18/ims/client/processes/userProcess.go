@@ -93,10 +93,16 @@ func (u *UserProcess) Login(userId int, userPwd string) (err error) {
 		fmt.Println("Login Success, Online User List:")
 		for idx, val := range loginRtnMsg.UserIds {
 			// not show myself
-			// if val == userId {
-			// 	continue
-			// }
+			if val == userId {
+				continue
+			}
 			fmt.Println(idx, val)
+			// init onlineUsers map
+			user := &message.User{
+				UserId: val,
+				UserStatus: message.UserOnline,
+			}
+			onlineUsers[val] = user
 		}
 		// another goroutine for server connection if anything pushed show
 		go msgPush(conn)

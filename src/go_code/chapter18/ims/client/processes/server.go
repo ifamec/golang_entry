@@ -1,8 +1,10 @@
 package processes
 
 import (
+	"encoding/json"
 	"fmt"
 	"go_code/chapter18/ims/client/utils"
+	"go_code/chapter18/ims/common/message"
 	"net"
 	"os"
 )
@@ -45,5 +47,21 @@ func msgPush(conn net.Conn) {
 		}
 		// show message
 		fmt.Println("Client : Msg From Server -", msg)
+		switch msg.Type {
+		case message.NotifyUserStatusMsgType: // client online
+			// 1. get notify message
+			var notifyUserStatusMsg message.NotifyUserStatusMsg
+			err = json.Unmarshal([]byte(msg.Data), &notifyUserStatusMsg)
+			if err != nil {
+				fmt.Println("Client : NotifyUserStatusMsgType Unmarshall Error -", err)
+				return
+			}
+			updateUserStatus(&notifyUserStatusMsg)
+
+			// 2. add to client side online user map[int]User
+
+		default:
+			fmt.Println("Unknown Msg Type")
+		}
 	}
 }
