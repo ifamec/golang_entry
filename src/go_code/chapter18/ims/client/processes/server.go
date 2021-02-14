@@ -65,10 +65,10 @@ func msgPush(conn net.Conn) {
 				fmt.Println("Client : NotifyUserStatusMsgType Unmarshall Error -", err)
 				return
 			}
-			updateUserStatus(&notifyUserStatusMsg)
-
 			// 2. add to client side online user map[int]User
-
+			updateUserStatus(&notifyUserStatusMsg)
+		case message.SmsResMsgType: // client online
+			printGroupMsg(&msg)
 		default:
 			fmt.Println("Unknown Msg Type")
 		}

@@ -9,6 +9,7 @@ const (
 	SignupRtnMsgType        = "SignupRtnMsg"
 	NotifyUserStatusMsgType = "NotifyUserStatusMsg"
 	SmsMsgType              = "SmsMsg"
+	SmsResMsgType           = "SmsResMsg"
 )
 
 const (
@@ -55,3 +56,7 @@ type SmsMsg struct { // SmsMsg
 }
 
 // SmsResMsg
+type SmsResMsg struct { // SmsMsg
+	Content string `json:"content"`
+	User    User
+}
