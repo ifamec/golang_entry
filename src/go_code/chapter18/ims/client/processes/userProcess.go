@@ -90,6 +90,14 @@ func (u *UserProcess) Login(userId int, userPwd string) (err error) {
 	}
 	if loginRtnMsg.Code == 200 {
 		// fmt.Println("Login Success")
+		fmt.Println("Login Success, Online User List:")
+		for idx, val := range loginRtnMsg.UserIds {
+			// not show myself
+			// if val == userId {
+			// 	continue
+			// }
+			fmt.Println(idx, val)
+		}
 		// another goroutine for server connection if anything pushed show
 		go msgPush(conn)
 		// show main menu
