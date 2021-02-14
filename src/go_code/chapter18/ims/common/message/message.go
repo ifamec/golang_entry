@@ -3,10 +3,19 @@ package message
 // message type const
 
 const (
-	LoginMsgType     = "LoginMsg"
-	LoginRtnMsgType  = "LoginRtnMsg"
-	SignupMsgType    = "SignupMsg"
-	SignupRtnMsgType = "SignupRtnMsg"
+	LoginMsgType            = "LoginMsg"
+	LoginRtnMsgType         = "LoginRtnMsg"
+	SignupMsgType           = "SignupMsg"
+	SignupRtnMsgType        = "SignupRtnMsg"
+	NotifyUserStatusMsgType = "NotifyUserStatusMsg"
+	SmsMsgType              = "SmsMsg"
+	SmsResMsgType           = "SmsResMsg"
+)
+
+const (
+	UserOnline = iota
+	UserOffline
+	UserBusy
 )
 
 type Message struct {
@@ -22,8 +31,9 @@ type LoginMsg struct {
 }
 
 type LoginRtnMsg struct {
-	Code  int    `json:"code"`  // 500 not registered, 200 success
-	Error string `json:"error"` // Error message
+	Code    int    `json:"code"`  // 500 not registered, 200 success
+	Error   string `json:"error"` // Error message
+	UserIds []int
 }
 
 type SignupMsg struct {
@@ -33,4 +43,20 @@ type SignupMsg struct {
 type SignupRtnMsg struct {
 	Code  int    `json:"code"`  // 200 success, 400 user exist
 	Error string `json:"error"` // Error message
+}
+
+type NotifyUserStatusMsg struct {
+	UserId int `json:"userId"`
+	Status int `json:"Status"`
+}
+
+type SmsMsg struct { // SmsMsg
+	Content string `json:"content"`
+	User    User
+}
+
+// SmsResMsg
+type SmsResMsg struct { // SmsMsg
+	Content string `json:"content"`
+	User    User
 }

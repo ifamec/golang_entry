@@ -11,6 +11,7 @@ import (
 
 type UserProcess struct {
 	Conn net.Conn
+	UserId int
 }
 
 func (u *UserProcess) ServerProcessLogin(msg *message.Message) (err error) {
@@ -44,17 +45,15 @@ func (u *UserProcess) ServerProcessLogin(msg *message.Message) (err error) {
 		}
 	} else {
 		loginRtnMsg.Code = 200
+		// update userId in `u` add user into onlineUser list `userMgr`
+		(*u).UserId = loginMsg.UserId
+		userMgr.AddOnlineUser(u)
+		(*u).NotifyOthersOnlineUser(loginMsg.UserId) // Notify other online user, I'm online
+		for id, _ := range userMgr.onlineUsers {
+			loginRtnMsg.UserIds = append(loginRtnMsg.UserIds, id)
+		}
 		fmt.Println("Server.UserDaoRtn:", user)
 	}
-
-	// if loginMsg.UserId == 100 && loginMsg.UserPwd == "123456" {
-	// 	// valid
-	// 	loginRtnMsg.Code = 200
-	// } else {
-	// 	// invalid
-	// 	loginRtnMsg.Code = 500
-	// 	loginRtnMsg.Error = "User InValid, Please SignUp"
-	// }
 
 	// serialize
 	data, err := json.Marshal(loginRtnMsg)
@@ -137,4 +136,46 @@ func (u *UserProcess) ServerProcessSignup(msg *message.Message) (err error) {
 	err = transfer.WritePkg(data)
 
 	return
+}
+
+func (u *UserProcess) NotifyOnline(userId int)  {
+	var msg message.Message
+	msg.Type = message.NotifyUserStatusMsgType
+
+	var notifyUserStatusMsg message.NotifyUserStatusMsg
+	notifyUserStatusMsg.UserId = userId
+	notifyUserStatusMsg.Status = message.UserOnline
+
+	data, err := json.Marshal(notifyUserStatusMsg)
+	if err != nil {
+		fmt.Println("Server : notifyUserStatusMsg Marshall Error -", err)
+		return
+	}
+
+	msg.Data = string(data)
+
+	data, err = json.Marshal(msg)
+	if err != nil {
+		fmt.Println("Server : notifyUserStatusMsg Message Marshall Error -", err)
+		return
+	}
+
+	transfer := utils.Transfer{
+		Conn: (*u).Conn,
+	}
+	err = transfer.WritePkg(data)
+	if err != nil {
+		fmt.Println("Server : notifyUserStatusMsg Message Sent Error -", err)
+		return
+	}
+}
+func (u *UserProcess) NotifyOthersOnlineUser(userId int)  {
+	// iterate other online user UserMgr and send NotifyUserStatusMsg
+	for id, up := range userMgr.onlineUsers {
+		if id == userId {
+			continue
+		}
+		// helper function
+		up.NotifyOnline(userId)
+	}
 }
