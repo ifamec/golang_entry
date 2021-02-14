@@ -89,6 +89,11 @@ func (u *UserProcess) Login(userId int, userPwd string) (err error) {
 		return
 	}
 	if loginRtnMsg.Code == 200 {
+		// init current user
+		CurUser.Conn = conn
+		CurUser.User.UserId = userId
+		CurUser.User.UserStatus = message.UserOnline
+
 		// fmt.Println("Login Success")
 		fmt.Println("Login Success, Online User List:")
 		for idx, val := range loginRtnMsg.UserIds {

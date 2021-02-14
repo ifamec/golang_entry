@@ -2,11 +2,13 @@ package processes
 
 import (
 	"fmt"
+	"go_code/chapter18/ims/client/model"
 	"go_code/chapter18/ims/common/message"
 )
 
 // map
 var onlineUsers map[int]*message.User = make(map[int]*message.User, 10)
+var CurUser model.CurUser // init after login success
 
 // handle return message
 func updateUserStatus(notifyUserStatusMsg *message.NotifyUserStatusMsg) {
