@@ -3,10 +3,17 @@ package message
 // message type const
 
 const (
-	LoginMsgType     = "LoginMsg"
-	LoginRtnMsgType  = "LoginRtnMsg"
-	SignupMsgType    = "SignupMsg"
-	SignupRtnMsgType = "SignupRtnMsg"
+	LoginMsgType            = "LoginMsg"
+	LoginRtnMsgType         = "LoginRtnMsg"
+	SignupMsgType           = "SignupMsg"
+	SignupRtnMsgType        = "SignupRtnMsg"
+	NotifyUserStatusMsgType = "NotifyUserStatusMsg"
+)
+
+const (
+	UserOnline = iota
+	UserOffline
+	UserBusy
 )
 
 type Message struct {
@@ -34,4 +41,9 @@ type SignupMsg struct {
 type SignupRtnMsg struct {
 	Code  int    `json:"code"`  // 200 success, 400 user exist
 	Error string `json:"error"` // Error message
+}
+
+type NotifyUserStatusMsg struct {
+	UserId int `json:"userId"`
+	Status int `json:"Status"`
 }
