@@ -102,4 +102,7 @@
     - Server Push Msg to Everyone (exclude the sender)
         - get sms
         - `smsProcess.go` push method
-    
+8. Extend // TODO 
+    - one to one chat
+    - change status when user offline
+    - leave a message when offline
