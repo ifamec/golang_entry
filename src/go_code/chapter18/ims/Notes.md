@@ -91,5 +91,11 @@
         - √ option 3: when a user online, server push the info to all online user/contact
             - 1 client need to maintain a map that records user/contact
             - 2 `map[int]User`
-            - 3 `serverProcessMsg` goroutine sync server-client 
+            - 3 `serverProcessMsg` goroutine sync server-client
+7. Group Chatting
+    ![ims_groupchat](src/ims_groupchat.png)
+    - Client Send Msg
+        - SmsMsg struct
+        - model `CurUser`
+        - smsProcess method `SendGroupMsg`
     
