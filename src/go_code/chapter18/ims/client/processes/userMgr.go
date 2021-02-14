@@ -24,8 +24,9 @@ func updateUserStatus(notifyUserStatusMsg *message.NotifyUserStatusMsg) {
 }
 
 func printOnlineUser()  {
-	fmt.Println("Current Online User List:")
+	fmt.Println("=== Current Online User List:")
 	for id, _ := range onlineUsers {
-		fmt.Println("User Id:", id)
+		fmt.Println("=== User Id:", id)
 	}
+	fmt.Println("==========")
 }

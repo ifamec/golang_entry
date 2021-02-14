@@ -21,7 +21,7 @@ func ShowMenu() {
 
 	switch key {
 	case 1:
-		fmt.Println("Online User List")
+		printOnlineUser()
 	case 2:
 		fmt.Println("Send Message")
 	case 3:
