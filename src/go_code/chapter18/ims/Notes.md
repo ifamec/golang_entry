@@ -1,6 +1,5 @@
 # IMS
 
-
 - Client
     - Login Page
         - UI
@@ -48,10 +47,10 @@
                 code int // 200 404 etc.
                 err string
                 ```
-            ...
-          
+          ...
 
 ## Code
+
 1. Login Page
 2. Login Validation
     - server 8889 listen
@@ -81,9 +80,16 @@
         3. server side add signup in userDao
 6. Fn - Return User Status after login
    ![ims_onlinelist](src/ims_onlinelist.png)
-     - maintain `onlineUsers map[int]*UserProcess`
+    - maintain `onlineUsers map[int]*UserProcess`
     - `userMgr.go` to CRUD
     - modify LoginMsg
-        - add onlineUser slice 
+        - add onlineUser slice
     - show online user list
+    - push new online user msg
+        - option 1: push to all if new user online
+        - option 2: push at certain second
+        - √ option 3: when a user online, server push the info to all online user/contact
+            - 1 client need to maintain a map that records user/contact
+            - 2 `map[int]User`
+            - 3 `serverProcessMsg` goroutine sync server-client 
     
