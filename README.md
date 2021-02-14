@@ -20,3 +20,8 @@ version 1.15.6
         |-project01
         ...
 ```
+
+## redigo module
+`./src/github.com/gomodule/redigo/`
+
+[GitHub Repository](https://github.com/gomodule/redigo)
