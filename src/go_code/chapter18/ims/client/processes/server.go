@@ -11,6 +11,7 @@ import (
 
 func ShowMenu() {
 	var key int
+	var content string
 	fmt.Println("-------- Hello XXX --------")
 	fmt.Println("\t 1. Online User List")
 	fmt.Println("\t 2. Send Message")
@@ -19,11 +20,19 @@ func ShowMenu() {
 	fmt.Print("--------  Select: ")
 	fmt.Scanln(&key)
 
+	// smsMsg
+	smsProcess := &SmsProcess{}
+
 	switch key {
 	case 1:
 		printOnlineUser()
 	case 2:
-		fmt.Println("Send Message")
+		fmt.Print("Message: ")
+		fmt.Scanln(&content)
+		err := smsProcess.SendGroupMsg(content)
+		if err != nil {
+			fmt.Println("Client : Send Group Msg Error", err)
+		}
 	case 3:
 		fmt.Println("History")
 	case 4:

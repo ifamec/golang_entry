@@ -15,6 +15,8 @@ type Processor struct {
 
 // handle msg based on msg type
 func (p *Processor) serverProcessMsg(msg *message.Message) (err error) {
+	// check group msg
+	fmt.Println("Msg:", msg)
 	switch msg.Type {
 	case message.LoginMsgType:
 		user := &processes.UserProcess{
