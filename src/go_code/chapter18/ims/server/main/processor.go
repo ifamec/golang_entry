@@ -28,6 +28,9 @@ func (p *Processor) serverProcessMsg(msg *message.Message) (err error) {
 			Conn: (*p).Conn,
 		}
 		err = user.ServerProcessSignup(msg)
+	case message.SmsMsgType:
+		sms := &processes.SmsProcess{}
+		err = sms.ForwardGroupMsg(msg)
 	default:
 		fmt.Println("Msg Type Not Exist")
 	}

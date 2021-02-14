@@ -98,4 +98,8 @@
         - SmsMsg struct
         - model `CurUser`
         - smsProcess method `SendGroupMsg`
+        - handle server group chat push
+    - Server Push Msg to Everyone (exclude the sender)
+        - get sms
+        - `smsProcess.go` push method
     
