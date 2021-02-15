@@ -31,5 +31,29 @@ A sparse array is an array of data in which many elements have a value of zero. 
 - tail == head -> empty
 - init: head = 0 tail = 0
 - how many data in queue `(tail+maxSize-head)%maxSize`
+
 [circle_queue](02_queue/circle_queue/main.go)
-  
+
+## Linked List
+
+### Singly Linked List
+
+head -> nil, next -> val: X, next -> val: Y, next -> nil
+
+[singly_linked_list](03_linkedlist/singly_linked_list/main.go)
+
+### Doubly Linked List
+
+head -> nil, next <-> prev, val: X, next <-> prev, val: Y, next -> nil
+
+[doubly_linked_list](03_linkedlist/doubly_linked_list/main.go)
+
+### Circular Linked List (Singly)
+
+last element .next -> first element
+
+[circular_linked_list](03_linkedlist/circular_linked_list/main.go)
+
+### Josephus Problem
+
+[josephus_problem](03_linkedlist/josephus_problem/main.go)
