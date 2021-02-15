@@ -57,3 +57,12 @@ last element .next -> first element
 ### Josephus Problem
 
 [josephus_problem](03_linkedlist/josephus_problem/main.go)
+
+## Sort
+### Bubble sort
+Check [Chapter 8 Bubble Sort](../chapter08/sort01_bubble/main.go)
+### Selection sort
+[Selection Sort](04_sort/selection_sort/main.go)
+### Insertion sort
+[Insertion Sort](04_sort/insertion_sort/main.go)
+### Quick sort
