@@ -66,3 +66,30 @@ Check [Chapter 8 Bubble Sort](../chapter08/sort01_bubble/main.go)
 ### Insertion sort
 [Insertion Sort](04_sort/insertion_sort/main.go)
 ### Quick sort
+[Quick Sort](04_sort/quick_sort/main.go)
+
+## Stack
+- First In Last Out (FILO)
+- stackTop stackBottom -> -1 init
+- Use
+    - call subProcess
+    - iteration
+    - statement transfer and calculation
+    - binary tree traverse
+    - graph depth-first search
+  
+[stack](05_stack/stack01/main.go)
+
+[stack_calc](05_stack/stack02_calc/main.go)
+- NumberStack, OperatorStack
+- index := 0
+- Exp - string
+- if is a number, push into numberStack 
+- if is an operator
+    - if operatorStack is empty, push
+    - if operatorStackTop prior than the one pend to push, 
+      pop operator and two numbers, calculate and push into numberStack, 
+      then push the new operator into operatorStack
+      else operator push into operatorStack
+    - everything is done, pop operator and two numbers, calculate and push into numberStack.
+      until operatorStack empty
