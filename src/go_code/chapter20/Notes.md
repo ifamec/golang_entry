@@ -100,3 +100,40 @@ Check [Chapter 8 Bubble Sort](../chapter08/sort01_bubble/main.go)
 - Recursion needs to be exited tended
 - When the function done / meet return the function will return, follows value returns to the caller. Then GC
 
+[recursion](06_recursion/recursion01/main.go)
+
+[recursion_eg](06_recursion/recursion02/main.go)
+
+## Hash Table
+Hash Table is a data structure which stores data in an associative manner. In a hash table, data is stored in an array format, where each data value has its own unique index value. Access of data becomes very fast if we know the index of the desired data.
+
+Example
+- Use linked list without head
+- Realize CRUD
+
+```
+hashtable->
+linkArr[0]->Emp0->Emp16->Emp32
+linkArr[1]->
+linkArr[2]->
+linkArr[3]->Emp3->Emp11
+linkArr[4]->
+linkArr[5]->
+linkArr[6]->Emp22
+linkArr[7]->
+```
+
+```go
+type LinkArr struct {
+	LinkArr [7]EmpLink
+}
+type EmpLink struct {
+	Head *Emp
+}
+type Emp struct {
+	Id int
+	Name string
+	Next
+}
+methods
+```
