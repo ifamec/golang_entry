@@ -93,3 +93,10 @@ Check [Chapter 8 Bubble Sort](../chapter08/sort01_bubble/main.go)
       else operator push into operatorStack
     - everything is done, pop operator and two numbers, calculate and push into numberStack.
       until operatorStack empty
+      
+## Recursion
+- Each function in the recursion will create a new individual space in ram
+- Function variables are independent
+- Recursion needs to be exited tended
+- When the function done / meet return the function will return, follows value returns to the caller. Then GC
+
